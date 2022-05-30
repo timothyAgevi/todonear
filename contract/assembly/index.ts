@@ -47,7 +47,7 @@ export class Contract{
     if(MY_TASKS.contains(signer)){
       const taskManager=MY_TASKS.getSome(signer);
      const isStarted=taskManager.startTask(taskId);
-     MY_TASKS.set(signer,taskManager)//store createdTask on blockchain
+     MY_TASKS.set(signer,taskManager)//store startTask on blockchain
      return isStarted;
    }
    return false;
@@ -58,7 +58,7 @@ completeTask(taskId:i32):bool{//change from void to bool
   if(MY_TASKS.contains(signer)){
     const taskManager=MY_TASKS.getSome(signer);
    const isCompleted=taskManager.completeTask(taskId);
-   MY_TASKS.set(signer,taskManager)//store createdTask on blockchain
+   MY_TASKS.set(signer,taskManager)//store completedTask on blockchain
    return isCompleted;
  }
  return false;
@@ -69,6 +69,7 @@ removeTask(taskId:i32):Task |null{//change from void to bool
   if(MY_TASKS.contains(signer)){
     const taskManager=MY_TASKS.getSome(signer);
    const task =taskManager.removeTask(taskId);
+   MY_TASKS.set(signer,taskManager)//store removedTask on blockchain
    return task;
  }
  return null;
