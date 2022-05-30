@@ -63,4 +63,14 @@ completeTask(taskId:i32):bool{//change from void to bool
  }
  return false;
 }
+//function to remove task
+removeTask(taskId:i32):Task |null{//change from void to bool
+  const signer=Context.sender;//get signer
+  if(MY_TASKS.contains(signer)){
+    const taskManager=MY_TASKS.getSome(signer);
+   const task =taskManager.removeTask(taskId);
+   return task;
+ }
+ return null;
+}
 }
