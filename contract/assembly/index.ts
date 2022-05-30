@@ -1,4 +1,5 @@
 import { Context } from "near-sdk-as";
+import { MY_TASKS } from "./utils/database";
 
 @nearBindgen
 export class Contract{
@@ -6,6 +7,9 @@ export class Contract{
     //get wallet addres of who signed contract
     const signer=Context.sender;
     //check whetgher it first time signer is creating task
-    // if(){}
+    if(MY_TASKS.contains(signer)){
+      //if signer exists get taskmanager dtatype
+      const taskManager = MY_TASKS.getSome(signer);
+    }
   }
 }
