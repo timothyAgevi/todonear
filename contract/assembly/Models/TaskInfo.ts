@@ -1,6 +1,6 @@
 import { TaskStatus } from "../utils/enums";
 
-
+@nearBindgen
 export class TaskInfo{
    title:String;
    status:TaskStatus;
