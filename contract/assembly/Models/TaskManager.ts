@@ -24,6 +24,23 @@ showAllTasks():Task[]{
     return this.tasks;
 }
 
+//function to remove task
+removeTask(taskId:i32): Task | null{
+if(taskId >=this.tasks.length)return null;
+const tmpTasks:Task[]=[];
+let removedTask:Task | null=null ;
+for(let i= 0;i<this.tasks.length; i++){
+    const task =this.tasks[i];
+    if(taskId !==i){
+        tmpTasks.push(task);
+    }else{
+      removedTask =task;  
+    }
+}
+this.tasks=tmpTasks;
+return removedTask;
+}
+
 //function to update status of task
 startTask(taskId:i32):bool{
    //check if task id is available 
