@@ -1,9 +1,10 @@
 import { Context } from "near-sdk-as";
+import { TaskInfo } from "./Models/TaskInfo";
 import { MY_TASKS } from "./utils/database";
 
 @nearBindgen
 export class Contract{
-  newTask(title:String):void{
+  newTask(title:String):TaskInfo{
     //get wallet addres of who signed contract
     const signer=Context.sender;
     //check whetgher it first time signer is creating task
@@ -12,6 +13,12 @@ export class Contract{
       const taskManager = MY_TASKS.getSome(signer);
       const createdTask =taskManager.addTask(title);
        MY_TASKS.set(signer,taskManager)//store createdTask on blockchain
+       return createdTask;
     }
+    const taskManager = MY_TASKS.getSome(signer);
+    const createdTask =taskManager.addTask(title);
+     MY_TASKS.set(signer,taskManager)//store createdTask on blockchain
+     return createdTask;
   }
+  
 }
