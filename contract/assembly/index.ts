@@ -10,6 +10,7 @@ export class Contract{
     if(MY_TASKS.contains(signer)){
       //if signer exists get taskmanager dtatype
       const taskManager = MY_TASKS.getSome(signer);
+      const createdTask =taskManager.addTask(title);
     }
   }
 }
