@@ -20,4 +20,11 @@ startTask(taskId:i32):bool{
    this.tasks[taskId].status=TaskStatus.ACTIVE;
    return true;
 }
+//function to change state of task to Completed
+completeTask(taskId:i32):bool{
+    //check if task id is available 
+    if(taskId >=this.tasks.length)return false;
+    this.tasks[taskId].status=TaskStatus.COMPLETED;
+    return true;
+ }
 }
