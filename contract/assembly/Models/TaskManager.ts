@@ -6,7 +6,8 @@ tasks:Task[]=[];
 //function to add task
 addTask(title:String):void{
    const task =new Task(title);//initialze new task
-   this.tasks.push(task);//add task to tasks array
+   const id =this.tasks.push(task);//add task to tasks array,push return index which it has bn push into
+
 }
 //function to remove task
 
