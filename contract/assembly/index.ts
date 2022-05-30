@@ -40,5 +40,16 @@ export class Contract{
       return taskManager.getAllTask();
     }
     return [];
- }
+   }
+   //function to change state of task
+   startTask(taskId:i32):bool{//change from void to bool
+    const signer=Context.sender;//get signer
+    if(MY_TASKS.contains(signer)){
+      const taskManager=MY_TASKS.getSome(signer);
+     const isStarted=taskManager.startTask(taskId);
+     MY_TASKS.set(signer,taskManager)//store createdTask on blockchain
+     return isStarted;
+   }
+   return false;
+  }
 }
