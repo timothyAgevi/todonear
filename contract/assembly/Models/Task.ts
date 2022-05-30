@@ -4,5 +4,11 @@ import { TaskStatus } from "../utils/enums";
 export class Task{
     title:String;
     status:TaskStatus;
-    id:i32;
+    //id:i32;
+
+    constructor(title:String){
+    this.title=title;
+    this.status=TaskStatus.PENDING;
+    
+    }
 }
