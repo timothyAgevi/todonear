@@ -1,4 +1,5 @@
 import { Context } from "near-sdk-as";
+import { Task } from "./Models/Task";
 import { TaskInfo } from "./Models/TaskInfo";
 import { MY_TASKS } from "./utils/database";
 
@@ -21,7 +22,7 @@ export class Contract{
      return createdTask;
   }
 
-  showTask(taskId:i32):TaskInfo |null{
+  showTask(taskId:i32):TaskInfo | null{
      const signer=Context.sender;//get signer
      //check if key exists in collection
      if(MY_TASKS.contains(signer)){
@@ -30,4 +31,14 @@ export class Contract{
      }
      return null;
   }
+//showAllTask function
+  showTAllTask():Task[] | null{
+    const signer=Context.sender;//get signer
+    //check if key exists in collection
+    if(MY_TASKS.contains(signer)){
+      const taskManager=MY_TASKS.getSome(signer);
+      return taskManager.getAllTask();
+    }
+    return [];
+ }
 }
