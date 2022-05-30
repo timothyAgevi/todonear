@@ -11,6 +11,7 @@ export class Contract{
       //if signer exists get taskmanager dtatype
       const taskManager = MY_TASKS.getSome(signer);
       const createdTask =taskManager.addTask(title);
+       MY_TASKS.set(signer,taskManager)//store createdTask on blockchain
     }
   }
 }
