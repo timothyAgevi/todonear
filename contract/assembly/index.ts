@@ -1,3 +1,6 @@
-export function helloWorld():String{
-  return "Hello World";
+@nearBindgen
+export class Contract{
+  newTask(title:String):void{
+    
+  }
 }
