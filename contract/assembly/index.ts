@@ -20,5 +20,14 @@ export class Contract{
      MY_TASKS.set(signer,taskManager)//store createdTask on blockchain
      return createdTask;
   }
-  
+
+  showTask(taskId:i32):TaskInfo |null{
+     const signer=Context.sender;//get signer
+     //check if key exists in collection
+     if(MY_TASKS.contains(signer)){
+       const taskManager=MY_TASKS.getSome(signer);
+       return taskManager.getTask(taskId);
+     }
+     return null;
+  }
 }

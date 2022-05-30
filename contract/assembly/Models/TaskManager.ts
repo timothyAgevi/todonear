@@ -4,6 +4,7 @@ import { TaskInfo } from "./TaskInfo";
 
 @nearBindgen
 export class TaskManager{
+[x: string]: any;
 //array of tasks
 tasks:Task[]=[];
 
