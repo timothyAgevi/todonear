@@ -41,7 +41,7 @@ export class Contract{
     }
     return [];
    }
-   //function to change state of task
+   //function to change state of task from pending to active
    startTask(taskId:i32):bool{//change from void to bool
     const signer=Context.sender;//get signer
     if(MY_TASKS.contains(signer)){
@@ -52,4 +52,15 @@ export class Contract{
    }
    return false;
   }
+//function to change state of task from pending to Completed
+completeTask(taskId:i32):bool{//change from void to bool
+  const signer=Context.sender;//get signer
+  if(MY_TASKS.contains(signer)){
+    const taskManager=MY_TASKS.getSome(signer);
+   const isCompleted=taskManager.completeTask(taskId);
+   MY_TASKS.set(signer,taskManager)//store createdTask on blockchain
+   return isCompleted;
+ }
+ return false;
+}
 }
