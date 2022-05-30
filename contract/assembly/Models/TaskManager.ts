@@ -26,13 +26,13 @@ showAllTasks():Task[]{
 
 //function to remove task
 removeTask(taskId:i32): Task | null{
-if(taskId >=this.tasks.length)return null;
+if(taskId >=this.tasks.length)return null;//check if task exists
 const tmpTasks:Task[]=[];
 let removedTask:Task | null=null ;
 for(let i= 0;i<this.tasks.length; i++){
     const task =this.tasks[i];
     if(taskId !==i){
-        tmpTasks.push(task);
+        tmpTasks.push(task);//index of current task
     }else{
       removedTask =task;  
     }
