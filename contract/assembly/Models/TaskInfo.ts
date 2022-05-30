@@ -8,7 +8,9 @@ export class TaskInfo{
 
    constructor(title:String,status:TaskStatus,id:i32){
     this.title=title;
-    this.status=TaskStatus.PENDING;
+    this.status=status;
+    this.id=id;
+    
     
     }
 }
