@@ -15,7 +15,7 @@ export class Contract{
       const createdTask =taskManager.addTask(title);
        MY_TASKS.set(signer,taskManager)//store createdTask on blockchain
        return createdTask;
-    }
+    }//let 1st time signer create new task
     const taskManager = MY_TASKS.getSome(signer);
     const createdTask =taskManager.addTask(title);
      MY_TASKS.set(signer,taskManager)//store createdTask on blockchain

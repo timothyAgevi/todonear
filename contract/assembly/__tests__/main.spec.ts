@@ -3,7 +3,7 @@ import { Task } from '../Models/Task';
 
 import { TaskManager } from '../Models/TaskManager';
 import { MY_TASKS } from '../utils/database';
-
+//initialize contract and signer
 const contract = new Contract();
 const signer ='simimi.testnet';
 
