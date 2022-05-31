@@ -4,13 +4,6 @@ import { TaskInfo } from "./TaskInfo";
 
 @nearBindgen
 export class TaskManager{
-getTask(taskId: number): TaskInfo | null {
-  throw new Error("Method not implemented.");
-}
-getAllTask(): Task[] | null {
-  throw new Error("Method not implemented.");
-}
-// [x: string]: any;
 
 //array of tasks
 tasks:Task[]=[];
@@ -20,16 +13,16 @@ tasks:Task[]=[];
 addTask(title:String):TaskInfo{
    const task =new Task(title);//initialze new task object
    const id =this.tasks.push(task);//add task to tasks array,push return index which it has bn push into
-   return new TaskInfo(task,id);
+   return new TaskInfo(task,id -1);
 }
 //function to view creted task
-showTask(taskId:i32):TaskInfo |null{
+getTask(taskId:i32):TaskInfo |null{
     if(taskId >=this.tasks.length)return null;  
     const task= this.tasks[taskId];
     return new TaskInfo(task,taskId);
 }
 //function to show all tasks
-showAllTasks():Task[]{
+getAllTasks():Task[]{
     return this.tasks;
 }
 

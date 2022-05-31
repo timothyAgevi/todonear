@@ -10,7 +10,7 @@ export class TaskInfo{
    constructor(task:Task,id:i32){
     this.title=task.title;
     this.status=task.status;
-    this.id=id -1;
+    this.id=id ;
 
     
     }

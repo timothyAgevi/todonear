@@ -6,7 +6,7 @@ export class Task{
     status:TaskStatus;
   // static title: any;
     //id:i32;
-
+    
     constructor(title:String){
     this.title=title;
     this.status=TaskStatus.PENDING;
