@@ -1,6 +1,6 @@
 import { VMContext } from 'near-sdk-as';
 import { Contract } from '..';
-import { Task } from '../Models/Task';
+
 import { TaskInfo } from '../Models/TaskInfo';
 
 
@@ -20,8 +20,8 @@ VMContext.setSigner_account_id(signer);//VMContext mimics context while running 
   it('Should add new Task',()=>{
 const taskmanager:TaskManager=MY_TASKS.getSome(signer);
 const myTasks=taskmanager.tasks;//array of tasks
-// log(Task)
-expect(Task.title).toStrictEqual(
+log(task)
+expect(task.title).toStrictEqual(
   myTasks[taskmanager.id].title,
   "Expect equal object."
 )
