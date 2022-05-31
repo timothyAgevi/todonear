@@ -22,7 +22,7 @@ const taskmanager:TaskManager=MY_TASKS.getSome(signer);
 const myTasks=taskmanager.tasks;//array of tasks
 log(task)
 expect(task.title).toStrictEqual(
-  myTasks[taskmanager.id].title,
+  myTasks[task.id].title,
   "Expect equal object."
 )
   })
