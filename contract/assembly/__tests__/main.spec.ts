@@ -10,21 +10,21 @@ let task:TaskInfo;
 
 describe( 'Tasks',()=>{
   beforeEach(()=>{
-// VMContext.setSigner_account_id(signer);//VMContext mimics context while running neartests on local environment
-//  task =contract.newTask('Write backend code!');
+VMContext.setSigner_account_id(signer);//VMContext mimics context while running neartests on local environment
+ task =contract.newTask('Write backend code!');
   })
 
   it('Should add new Task',()=>{
-    VMContext.setSigner_account_id(signer);//VMContext mimics context while running neartests on local environment
- task =contract.newTask('Write backend code!');
+//     VMContext.setSigner_account_id(signer);//VMContext mimics context while running neartests on local environment
+//  task =contract.newTask('Write backend code!');
 const taskmanager:TaskManager =MY_TASKS.getSome(signer);
 const myTasks  =taskmanager.tasks;//array of tasks
 
 log(task);
-// expect(task.title).toStrictEqual(
-//   myTasks[task.id].title,
-//   "Expect equal object."
-// )
+expect(task.title).toStrictEqual(
+  myTasks[task.id].title,
+  "Expect equal object."
+)
   })
 //test retieving of added task
 
