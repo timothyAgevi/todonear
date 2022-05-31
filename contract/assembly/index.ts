@@ -32,7 +32,7 @@ export class Contract{
      return null;
   }
 //showAllTask function
-  showTAllTask():Task[] | null{
+  showAllTask():Task[] | null{
     const signer=Context.sender;//get signer
     //check if key exists in collection
     if(MY_TASKS.contains(signer)){
@@ -67,7 +67,7 @@ completeTask(taskId:i32):bool{//change from void to bool
 removeTask(taskId:i32):Task |null{//change from void to bool
   const signer=Context.sender;//get signer
   if(MY_TASKS.contains(signer)){
-    const taskManager=MY_TASKS.getSome(signer);
+    const taskManager=MY_TASKS.getSome(signer);//attach signer to task
    const task =taskManager.removeTask(taskId);
    MY_TASKS.set(signer,taskManager)//store removedTask on blockchain
    return task;

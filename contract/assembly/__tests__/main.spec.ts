@@ -1,4 +1,20 @@
-import { Account, Contract} from 'near-api-js';
+import { Contract } from '..';
+import { Task } from '../Models/Task';
 
-const contract =new Contract();
-const signer ='simimi.testnet'
+import { TaskManager } from '../Models/TaskManager';
+import { MY_TASKS } from '../utils/database';
+
+const contract = new Contract();
+const signer ='simimi.testnet';
+
+describe( 'Tasks',()=>{
+  it('Should add new Task',()=>{
+const taskmanager:TaskManager=MY_TASKS.getSome(signer);
+const myTasks=taskmanager.tasks;//array of tasks
+log(Task)
+expect(Task.title).toStrictEqual(
+  myTasks[taskmanager.id].title,
+  "Exprct equal object"
+)
+  })
+})

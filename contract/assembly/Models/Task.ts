@@ -4,6 +4,7 @@ import { TaskStatus } from "../utils/enums";
 export class Task{
     title:String;
     status:TaskStatus;
+  static title: any;
     //id:i32;
 
     constructor(title:String){
