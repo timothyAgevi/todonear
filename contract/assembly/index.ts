@@ -2,7 +2,7 @@ import { Context } from "near-sdk-as";
 import { Task } from "./Models/Task";
 import { TaskInfo } from "./Models/TaskInfo";
 import { MY_TASKS } from "./utils/database";
-
+// import { TaskManager } from "./Models/TaskManager";
 @nearBindgen
 export class Contract{
   newTask(title:String):TaskInfo{
@@ -15,7 +15,7 @@ export class Contract{
       const createdTask =taskManager.addTask(title);
        MY_TASKS.set(signer,taskManager)//store createdTask on blockchain
        return createdTask;
-    }//let 1st time signer create new task
+    }//let 1st time signer
     const taskManager = MY_TASKS.getSome(signer);
     const createdTask =taskManager.addTask(title);
      MY_TASKS.set(signer,taskManager)//store createdTask on blockchain

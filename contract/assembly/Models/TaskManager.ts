@@ -4,9 +4,17 @@ import { TaskInfo } from "./TaskInfo";
 
 @nearBindgen
 export class TaskManager{
-[x: string]: any;
+getTask(taskId: number): TaskInfo | null {
+  throw new Error("Method not implemented.");
+}
+getAllTask(): Task[] | null {
+  throw new Error("Method not implemented.");
+}
+// [x: string]: any;
+
 //array of tasks
 tasks:Task[]=[];
+ 
 
 //function to add task
 addTask(title:String):TaskInfo{
