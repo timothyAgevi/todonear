@@ -11,10 +11,10 @@ describe( 'Tasks',()=>{
   it('Should add new Task',()=>{
 const taskmanager:TaskManager=MY_TASKS.getSome(signer);
 const myTasks=taskmanager.tasks;//array of tasks
-log(Task)
+// log(Task)
 expect(Task.title).toStrictEqual(
   myTasks[taskmanager.id].title,
-  "Exprct equal object"
+  "Expect equal object."
 )
   })
 })
