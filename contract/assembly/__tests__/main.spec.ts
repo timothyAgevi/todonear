@@ -55,5 +55,10 @@ const removedTask=<TaskInfo>contract.removeTask(0);
 //variable to store task list after removing task
 const taskmanagerAfterRemoval:TaskManager =MY_TASKS.getSome(signer);
 const myTaskAfterRemoval=taskmanagerAfterRemoval.tasks;
+//test if length of taskbefore removal >taskafterremoval
+expect(myTaskBeforeRemoval.length).toBeGreaterThan(
+  myTaskAfterRemoval.length 
+)
+
 })
 })
