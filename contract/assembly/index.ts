@@ -17,7 +17,7 @@ export class Contract{
        MY_TASKS.set(signer,taskManager)//store createdTask on blockchain
        return createdTask;
     }//let 1st time signer
-    const taskManager = new TaskManager()
+    const taskManager = new TaskManager()//intanstiate 
     const createdTask =taskManager.addTask(title);
      MY_TASKS.set(signer,taskManager)//store createdTask on blockchain
      return createdTask;
@@ -37,9 +37,7 @@ export class Contract{
     const signer=Context.sender;//get signer
     //check if key exists in collection
     if(MY_TASKS.contains(signer)){
-      const taskManager: any =MY_TASKS.getSome(signer);
-      console.log(taskManager);
-      
+      const taskManager=MY_TASKS.getSome(signer);
       return taskManager.getAllTasks();
     }
     return [];

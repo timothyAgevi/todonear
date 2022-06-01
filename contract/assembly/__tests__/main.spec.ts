@@ -26,14 +26,15 @@ expect(task.title).toStrictEqual(
 )
   })
 //test retieving of added task
-// const taskmanager:TaskManager= MY_TASKS.getSome(signer);
-// const myTasks =taskmanager.tasks;
-// const firstTask=<TaskInfo>contract.showTask(0);
-// const allTasks=< Task[]>contract.showAllTask();
+it('Should retrieve added task',()=>{
+const taskmanager:TaskManager= MY_TASKS.getSome(signer);
+const myTasks =taskmanager.tasks;//get array of tasks
+const firstTask=<TaskInfo>contract.showTask(0);// show lastly added task
+const allTasks=< Task[]>contract.showAllTask();//show allTasks
 
-// expect(firstTask).not.toBeNull();
-// expect(firstTask.title).toStrictEqual(myTasks[0].title);
-// expect(allTasks.length).toStrictEqual(1);
-
+expect(firstTask).not.toBeNull();
+expect(firstTask.title).toStrictEqual(myTasks[0].title);
+expect(allTasks.length).toStrictEqual(1);
+})
 
 })
