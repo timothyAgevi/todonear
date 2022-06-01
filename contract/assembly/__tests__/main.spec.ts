@@ -51,7 +51,7 @@ it('should remove task from list of tasks',()=>{
 const taskmanagerBeforeRemoval:TaskManager=MY_TASKS.getSome(signer);//attach signer to tasklist
 const myTaskBeforeRemoval=taskmanagerBeforeRemoval.tasks;
 //variable to store removed task
-const removedTask=<TaskInfo>contract.removeTask(0);
+const removedTask=<Task>contract.removeTask(0);
 //variable to store task list after removing task
 const taskmanagerAfterRemoval:TaskManager =MY_TASKS.getSome(signer);
 const myTaskAfterRemoval=taskmanagerAfterRemoval.tasks;
