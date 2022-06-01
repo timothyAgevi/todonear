@@ -45,4 +45,14 @@ it('Should change the status of task',()=>{
   const myTasks=taskmanager.tasks;//reteiving list of tasks from persistent collection
   expect(myTasks[0].status).toStrictEqual(TaskStatus.COMPLETED);//if task list's staus ==COMPLETED
 })
+//test if removeTask is working
+it('should remove task from list of tasks',()=>{
+  //create variables to store tasklist before removal of task
+const taskmanagerBeforeRemoval:TaskManager=MY_TASKS.getSome(signer);//attach signer to tasklist
+const myTaskBeforeRemoval=taskmanagerBeforeRemoval.tasks;
+
+const removedTask=<TaskInfo>contract.removeTask(0);
+
+const task
+})
 })
