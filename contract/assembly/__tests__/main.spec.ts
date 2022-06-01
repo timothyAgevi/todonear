@@ -58,7 +58,8 @@ const myTaskAfterRemoval=taskmanagerAfterRemoval.tasks;
 //test if length of taskbefore removal >taskafterremoval
 expect(myTaskBeforeRemoval.length).toBeGreaterThan(
   myTaskAfterRemoval.length 
-)
-
+);
+//test if task list length after removal is 0
+expect(myTaskAfterRemoval.length).toStrictEqual(0);
 })
 })
