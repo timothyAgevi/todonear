@@ -7,7 +7,7 @@ import { MY_TASKS } from '../utils/database';
 import { TaskStatus } from '../utils/enums';
 //initialize contract and signer
 const contract = new Contract();
-const signer ='simimi.testnet';
+const signer ='neartraining.testnet';
 let task:TaskInfo;
 
 describe( 'Tasks',()=>{
