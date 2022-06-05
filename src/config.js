@@ -1,4 +1,5 @@
 const CONTRACT_NAME = process.env.CONTRACT_NAME ||'todonear'
+const APP_NAME='Sankore Academy Task Manager'
 
 function getConfig(env) {
   switch (env) {
