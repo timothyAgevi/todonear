@@ -28,6 +28,7 @@ export async function initContract() {
       'completeTask',
       'removeTask'
   ],
+  sender:account,//account object to intialize and sign transactions
   })
 }
 
