@@ -1,3 +1,5 @@
+const { NEAR_NOMINATION_EXP } = require("near-api-js/lib/utils/format")
+
 const CONTRACT_NAME = process.env.CONTRACT_NAME ||'todonear'
 const APP_NAME=' Task Manager'
 
@@ -10,6 +12,7 @@ function getConfig(env) {
       networkId: 'mainnet',
       nodeUrl: 'https://rpc.mainnet.near.org',
       contractName: CONTRACT_NAME,
+      keyStore:new NEAR_NOMINATION_EXP.keyStores.BrowserLocalStorageKeyStore(),
       walletUrl: 'https://wallet.near.org',
       helperUrl: 'https://helper.mainnet.near.org',
       explorerUrl: 'https://explorer.mainnet.near.org',
