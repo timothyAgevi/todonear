@@ -1,113 +1,145 @@
-import 'regenerator-runtime/runtime'
-
-import { initContract, login, logout } from './utils'
-
-import getConfig from './config'
-const { networkId } = getConfig(process.env.NODE_ENV || 'development')
-
-// global variable used throughout
-let currentGreeting
-
-const submitButton = document.querySelector('form button')
-
-document.querySelector('form').onsubmit = async (event) => {
-  event.preventDefault()
-
-  // get elements from the form using their id attribute
-  const { fieldset, greeting } = event.target.elements
-
-  // disable the form while the value gets updated on-chain
-  fieldset.disabled = true
-
-  try {
-    // make an update call to the smart contract
-    await window.contract.setGreeting({
-      // pass the value that the user entered in the greeting field
-      message: greeting.value
-    })
-  } catch (e) {
-    alert(
-      'Something went wrong! ' +
-      'Maybe you need to sign out and back in? ' +
-      'Check your browser console for more info.'
-    )
-    throw e
-  } finally {
-    // re-enable the form, whether the call succeeded or failed
-    fieldset.disabled = false
-  }
-
-  // disable the save button, since it now matches the persisted value
-  submitButton.disabled = true
-
-  // update the greeting in the UI
-  await fetchGreeting()
-
-  // show notification
-  document.querySelector('[data-behavior=notification]').style.display = 'block'
-
-  // remove notification again after css animation completes
-  // this allows it to be shown again next time the form is submitted
-  setTimeout(() => {
-    document.querySelector('[data-behavior=notification]').style.display = 'none'
-  }, 11000)
-}
-
-document.querySelector('input#greeting').oninput = (event) => {
-  if (event.target.value !== currentGreeting) {
-    submitButton.disabled = false
+if (window.location.pathname === '/auth.html') {
+  // Check if wallet is linked
+  if (isLoggedIn()) {
+    window.location.href = '/index.html';
   } else {
-    submitButton.disabled = true
+    // Access login button DOM element
+    const loginBtn = document.querySelector('#login-btn');
+    loginBtn.onclick = (event) => {
+      login();
+    };
+  }
+} else if (
+  window.location.pathname === '/index.html' ||
+  window.location.pathname === '/'
+) {
+  if (!isLoggedIn()) {
+    window.location.href = '/auth.html';
+  }
+  document.querySelector('#app-name').textContent = APP_NAME;
+  document.querySelector('#wallet-id').textContent = getAccount();
+  const newTaskForm = document.querySelector('#new-task');
+  const logoutBtn = document.querySelector('#logout');
+
+  /**
+   * =====================================================
+   * Smart Contract Calls
+   * =====================================================
+   */
+
+  // Logout User
+  logoutBtn.onclick = () => {
+    logout();
+    window.location.reload();
+  };
+
+  // Adds submitted task
+  newTaskForm.onsubmit = async (event) => {
+    event.preventDefault();
+    const taskTitle = event.target.newTaskTitle.value;
+    const createdTask = await newTask(taskTitle);
+    const pendingTaskView = document.querySelector('#pending-tasks');
+    pendingTaskView.innerHTML += `<li
+                        class="list-group-item d-flex align-items-center justify-content-between border-0 mb-2 rounded"
+                        style="background-color: #f4f6f7"
+                      >
+                        <div class="d-flex align-items-center">
+                          ${createdTask.title}
+                        </div>
+                        <button onclick="eventWrap(${createdTask.id}, ${startTask})" class="btn btn-sm btn-secondary m-2 text-light">
+                          Start
+                        </button>
+                      </li>`;
+    newTaskForm.reset();
+  };
+
+  // Displays tasks
+  displayTasks();
+}
+
+async function displayTasks() {
+  // Retreive all tasks from smart contract
+  const allTasks = await getAllTasks();
+
+  let pending = '';
+  let active = '';
+  let complete = '';
+
+  // Loop through the list of tasks if any and wrap them in relevant HTML elemnts
+  for (let i = 0; i < allTasks.length; i++) {
+    const task = allTasks[i];
+    if (task.status === 0) {
+      pending += taskElement(i, task.status, task.title);
+    } else if (task.status === 1) {
+      active += taskElement(i, task.status, task.title);
+    } else {
+      complete += taskElement(i, task.status, task.title);
+    }
+  }
+
+  // Reflect the change in DOM
+  updateTaskViews(pending, active, complete);
+}
+
+function taskElement(id, status, title) {
+  switch (status) {
+    case 0:
+      return `<li
+                        class="list-group-item d-flex align-items-center justify-content-between border-0 mb-2 rounded"
+                        style="background-color: #f4f6f7"
+                      >
+                        <div class="d-flex align-items-center">
+                          ${title}
+                        </div>
+                        <button onclick="eventWrap(${id}, ${startTask})" class="btn btn-sm btn-secondary m-2 text-light">
+                          Start
+                        </button>
+                      </li>`;
+    case 1:
+      return `<li
+                        class="list-group-item d-flex align-items-center justify-content-between border-0 mb-2 rounded"
+                        style="background-color: #f4f6f7"
+                      >
+                        <div class="d-flex align-items-center">
+                          ${title}
+                        </div>
+                        <button onclick="eventWrap(${id}, ${completeTask})" class="btn btn-sm btn-secondary m-2 text-light">
+                          Complete
+                        </button>
+                      </li>`;
+    case 2:
+      return `<li
+                        class="list-group-item d-flex align-items-center justify-content-between border-0 mb-2 rounded"
+                        style="background-color: #f4f6f7"
+                      >
+                        <div class="d-flex align-items-center">
+                          ${title}
+                        </div>
+                        <button onclick="eventWrap(${id}, ${removeTask})" class="btn btn-sm btn-danger m-2 text-light">
+                          Delete
+                        </button>
+                      </li>`;
+
+    default:
+      '';
   }
 }
 
-document.querySelector('#sign-in-button').onclick = login
-document.querySelector('#sign-out-button').onclick = logout
+function updateTaskViews(pending, active, completed) {
+  const pendingTaskView = document.querySelector('#pending-tasks');
+  const activeTaskView = document.querySelector('#active-tasks');
+  const completedTaskView = document.querySelector('#completed-tasks');
 
-// Display the signed-out-flow container
-function signedOutFlow() {
-  document.querySelector('#signed-out-flow').style.display = 'block'
+  pendingTaskView.innerHTML = pending;
+  activeTaskView.innerHTML = active;
+  completedTaskView.innerHTML = completed;
 }
 
-// Displaying the signed in flow container and fill in account-specific data
-function signedInFlow() {
-  document.querySelector('#signed-in-flow').style.display = 'block'
-
-  document.querySelectorAll('[data-behavior=account-id]').forEach(el => {
-    el.innerText = window.accountId
-  })
-
-  // populate links in the notification box
-  const accountLink = document.querySelector('[data-behavior=notification] a:nth-of-type(1)')
-  accountLink.href = accountLink.href + window.accountId
-  accountLink.innerText = '@' + window.accountId
-  const contractLink = document.querySelector('[data-behavior=notification] a:nth-of-type(2)')
-  contractLink.href = contractLink.href + window.contract.contractId
-  contractLink.innerText = '@' + window.contract.contractId
-
-  // update with selected networkId
-  accountLink.href = accountLink.href.replace('testnet', networkId)
-  contractLink.href = contractLink.href.replace('testnet', networkId)
-
-  fetchGreeting()
+async function eventWrap(id, callback) {
+  const res = await callback(id);
+  if (res) {
+    window.location.reload();
+  } else {
+    alert(`Operation as not successful!`);
+  }
 }
-
-// update global currentGreeting variable; update DOM with it
-async function fetchGreeting() {
-  currentGreeting = await contract.getGreeting({ accountId: window.accountId })
-  document.querySelectorAll('[data-behavior=greeting]').forEach(el => {
-    // set divs, spans, etc
-    el.innerText = currentGreeting
-
-    // set input elements
-    el.value = currentGreeting
-  })
-}
-
-// `nearInitPromise` gets called on page load
-window.nearInitPromise = initContract()
-  .then(() => {
-    if (window.walletConnection.isSignedIn()) signedInFlow()
-    else signedOutFlow()
-  })
-  .catch(console.error)
