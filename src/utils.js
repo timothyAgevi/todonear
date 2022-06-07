@@ -72,7 +72,7 @@ const logout = () => {
 const newTask = async (title) => {
   if (isLoggedIn()) {
     const response = await contract.newTask({
-      title,
+      title:title,
     });
     return response;
   }

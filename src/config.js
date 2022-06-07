@@ -1,4 +1,4 @@
-import { NEAR_NOMINATION_EXP } from "near-api-js/lib/utils/format"
+const { NEAR_NOMINATION_EXP }= "near-api-js/lib/utils/format"
 const CONTRACT_NAME = process.env.CONTRACT_NAME ||'todonear'
 const APP_NAME=' Task Manager'
 
