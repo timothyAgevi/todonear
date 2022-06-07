@@ -1,6 +1,15 @@
-const { NEAR_NOMINATION_EXP }= "near-api-js/lib/utils/format"
-const CONTRACT_NAME = process.env.CONTRACT_NAME ||'todonear'
+import { connect, keyStores, WalletConnection } from "near-api-js";
+// const { NEAR_NOMINATION_EXP }= "near-api-js/lib/utils/format"
+
 const APP_NAME=' Task Manager'
+
+const CONTRACT_NAME = process.env.CONTRACT_NAME ||'todonear'
+
+// creates keyStore using private key in local storage
+// *** REQUIRES SignIn using walletConnection.requestSignIn() ***
+
+
+// const keyStore = new keyStores.BrowserLocalStorageKeyStore();
 
 function getConfig(env) {
   switch (env) {
@@ -11,7 +20,7 @@ function getConfig(env) {
       networkId: 'mainnet',
       nodeUrl: 'https://rpc.mainnet.near.org',
       contractName: CONTRACT_NAME,
-      keyStore:new nearApi.keyStores.BrowserLocalStorageKeyStore(),
+      keyStore:new keyStores.BrowserLocalStorageKeyStore(),
       walletUrl: 'https://wallet.near.org',
       helperUrl: 'https://helper.mainnet.near.org',
       explorerUrl: 'https://explorer.mainnet.near.org',
@@ -22,7 +31,7 @@ function getConfig(env) {
       networkId: 'testnet',
       nodeUrl: 'https://rpc.testnet.near.org',
       contractName: CONTRACT_NAME,
-      keyStore:new nearApi.keyStores.BrowserLocalStorageKeyStore(),
+      keyStore:new keyStores.BrowserLocalStorageKeyStore(),
       walletUrl: 'https://wallet.testnet.near.org',
       helperUrl: 'https://helper.testnet.near.org',
       explorerUrl: 'https://explorer.testnet.near.org',

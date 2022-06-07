@@ -1,5 +1,5 @@
 const nearConfig = getConfig('development');
-
+// const {nearApi} =window
 // Initialize contract & set global variables
 (async function () {
   // Initialize connection to NEAR testnet
@@ -72,7 +72,7 @@ const logout = () => {
 const newTask = async (title) => {
   if (isLoggedIn()) {
     const response = await contract.newTask({
-      title:title,
+      title,// title:title,
     });
     return response;
   }
